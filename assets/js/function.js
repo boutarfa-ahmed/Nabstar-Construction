@@ -32,113 +32,96 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    // Configuration
-    const CONFIG = {
-        iframeId: "trainingIframe",
-        formId: "contactForm",
-        responseId: "formResponse",
-        endpoint: "includes/contact.php",
-        animationDuration: 3000
-    };
 
-    // Initialisation principale
-    initFormHandler(document);
+// Function signature change: pass elements, not the whole document
+function initFormHandler(formElement, responseElement) {
+    if (!formElement) return;
 
-    // Gestion de l'iframe
-    const iframe = document.getElementById(CONFIG.iframeId);
-    if (iframe) {
-        iframe.addEventListener("load", () => {
-            try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                initFormHandler(iframeDoc);
-            } catch (error) {
-                console.error("Erreur d'accès à l'iframe:", error);
-            }
-        });
-    }
-});
-
-function initFormHandler(doc) {
-    const { formId, responseId, endpoint, animationDuration } = CONFIG;
-    
-    const form = doc.getElementById(formId);
-    const formResponse = doc.getElementById(responseId);
-
-    if (!form) {
-        console.warn(`Formulaire ${formId} introuvable`);
-        return;
-    }
-
-    form.addEventListener("submit", handleSubmit);
-
-    async function handleSubmit(e) {
+    formElement.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        // Désactivation du bouton d'envoi
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Envoi en cours...";
-
-        // Réinitialisation de la réponse
-        resetResponse(formResponse);
+        responseElement.style.opacity = "0"; // Start by hiding previous response
+        let formData = new FormData(this);
 
         try {
-            const formData = new FormData(form);
-            
-            const response = await fetch(endpoint, {
+            const response = await fetch("includes/contact.php", {
                 method: "POST",
                 body: formData
             });
 
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
+            // Check for HTTP errors (e.g., 404, 500) before trying to parse JSON
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
             const data = await response.json();
 
             if (data.success) {
-                showResponse(formResponse, data.message, "success");
-                form.reset();
+                responseElement.style.color = "green";
+                responseElement.textContent = data.message;
+                formElement.reset();
             } else {
-                showResponse(formResponse, data.error, "error");
+                // Assuming 'data.error' exists if 'data.success' is false
+                responseElement.style.color = "red";
+                responseElement.textContent = data.error || "Form submission failed with no specific error message.";
             }
-
-        } catch (error) {
-            console.error("Erreur:", error);
-            showResponse(
-                formResponse,
-                "Erreur de connexion. Veuillez réessayer.",
-                "error"
-            );
+        } catch (err) {
+            responseElement.style.color = "red";
+            responseElement.textContent = "An error occurred. Please check the console.";
+            // Log the full error object for better debugging
+            console.error("Form submission error:", err);
         } finally {
-            // Réactivation du bouton
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
+            // Display the response and start the fade-out, regardless of success/error
+            responseElement.style.opacity = "1";
+            
+            // Wait 3 seconds, then start a 1-second transition to fade out
+            setTimeout(() => {
+                responseElement.style.transition = "opacity 1s ease-out";
+                responseElement.style.opacity = "0";
+            }, 3000);
+            
+            // Clean up the transition property after it's done so it doesn't interfere
+            // with the *next* time we set opacity to 1 instantly.
+            setTimeout(() => {
+                 responseElement.style.removeProperty('transition');
+            }, 4000); // 3000ms delay + 1000ms transition
         }
-    }
-
-    function resetResponse(responseElement) {
-        responseElement.style.opacity = "0";
-        responseElement.textContent = "";
-        responseElement.className = "form-response";
-    }
-
-    function showResponse(responseElement, message, type) {
-        responseElement.textContent = message;
-        responseElement.style.color = type === "success" ? "#22c55e" : "#ef4444";
-        responseElement.classList.add(type);
-        
-        // Animation d'apparition
-        responseElement.style.opacity = "1";
-        
-        // Disparition progressive après délai
-        setTimeout(() => {
-            responseElement.style.transition = `opacity ${animationDuration}ms ease-out`;
-            responseElement.style.opacity = "0";
-        }, animationDuration);
-    }
+    });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Helper function to find and pass elements
+    const setupForm = (doc) => {
+        const form = doc.getElementById("contactForm");
+        const response = doc.getElementById("formResponse");
+        
+        // Only initialize if both are found
+        if (form && response) {
+            initFormHandler(form, response);
+            
+        }
+    };
+    
+    // 1. Setup the form on the main document
+    setupForm(document);
+
+    // 2. Setup the form inside the iframe, if it exists
+    const iframe = document.getElementById("trainingIframe");
+    if (iframe) {
+        iframe.addEventListener("load", () => {
+            try {
+                // Ensure contentWindow exists and contentDocument is accessible (Same-Origin Policy check)
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+                if (iframeDoc) {
+                    setupForm(iframeDoc);
+                }
+            } catch (e) {
+                // Catch potential SecurityError if the iframe is cross-origin
+                console.warn("Could not access iframe content due to potential cross-origin restriction:", e);
+            }
+        });
+    }
+});
 // show loading (pass container)
 function showLoading(container, msg) {
   container.innerHTML = `

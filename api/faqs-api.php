@@ -13,7 +13,7 @@ try{
     ");
     $stmt->execute();
 
-    $faqs = $stmt->fetchAll();
+    $faqs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([
         'success' =>true,

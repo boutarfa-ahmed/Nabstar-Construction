@@ -17,10 +17,11 @@
     <aside id="sidebar" class="app-sidebar bg-dark text-white vh-100 p-3" style="width: 250px;">
       <h5 class="mb-4">Sidebar</h5>
       <ul class="nav flex-column" id="navigation">
-        <li class="nav-item"><a href="#" class="nav-link text-white">Work 1</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-white">Work 2</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-white">Work 3</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-white">Work 4</a></li>
+        <li class="nav-item"><a id="workViewAdmin" href="#" class="nav-link text-white">Works</a></li>
+        <li class="nav-item"><a id="serviceViewAdmin" href="#" class="nav-link text-white">Services</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-white">Services Area</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-white">Testimonials</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-white">Faqs</a></li>
       </ul>
     </aside>
 
@@ -35,7 +36,7 @@
               <a id="toggleSidebarBtn" class="nav-link" href="#"><i class="bi bi-list"></i></a>
             </li>
             <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
+            <li class="nav-item d-none d-md-block"><a id="contactViewAdmin" href="#" class="nav-link">Contact</a></li>
           </ul>
 
           <ul class="navbar-nav ms-auto">
@@ -53,14 +54,16 @@
       </nav>
 
       <!-- Main Page Content -->
-      <main class="p-4">
-        <h1 class="h3">Welcome</h1>
+      <main id="container" class="p-4">
+        <h1 class="h3">Welcome NabStar</h1>
         <p>This is your main content area beside the sidebar.</p>
       </main>
     </div>
 
   </div>
+  <script src="assest/workView.js"></script>
   <script src="assest/script.js"></script>
+  <script src="assest/contactView.js"></script>
   <script src="assest/viewDropdownMessage.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
