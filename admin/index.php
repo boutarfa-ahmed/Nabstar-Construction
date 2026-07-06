@@ -19,9 +19,9 @@
       <ul class="nav flex-column" id="navigation">
         <li class="nav-item"><a id="workViewAdmin" href="#" class="nav-link text-white">Works</a></li>
         <li class="nav-item"><a id="serviceViewAdmin" href="#" class="nav-link text-white">Services</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-white">Services Area</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-white">Testimonials</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-white">Faqs</a></li>
+        <li class="nav-item"><a id="serviceAreaViewAdmin" href="#" class="nav-link text-white">Services Area</a></li>
+        <li class="nav-item"><a id="testimonialViewAdmin" href="#" class="nav-link text-white">Testimonials</a></li>
+        <li class="nav-item"><a id="faqViewAdmin" href="#" class="nav-link text-white">Faqs</a></li>
       </ul>
     </aside>
 
@@ -65,6 +65,10 @@
   <script src="assest/script.js"></script>
   <script src="assest/contactView.js"></script>
   <script src="assest/viewDropdownMessage.js"></script>
+  <script src="assest/servicesView.js"></script>
+  <script src="assest/serviceAreaView.js"></script>
+  <script src="assest/testimonialView.js"></script>
+  <script src="assest/faqView.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

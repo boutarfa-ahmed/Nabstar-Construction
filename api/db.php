@@ -5,16 +5,16 @@ $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
 
 if ($isLocal) {
     // --- Connexion locale ---
-    define('DB_HOST', 'localhost');
+    define('DB_HOST', '127.0.0.1');
     define('DB_NAME', 'nabstar');
     define('DB_USER', 'root');
     define('DB_PASS', '');
 } else {
     // --- Connexion en ligne (InfinityFree) ---
-    define('DB_HOST', 'sql111.infinityfree.com');
-    define('DB_NAME', 'if0_40053831_nabstar');
-    define('DB_USER', 'if0_40053831');
-    define('DB_PASS', 'rIVILEcE83OXI');
+    define('DB_HOST', 'sql303.infinityfree.com');
+    define('DB_NAME', 'if0_42351952_nabstar');
+    define('DB_USER', 'if0_42351952');
+    define('DB_PASS', 'B2YCQno6JNGy');
 }
 
 define('DB_CHARSET', 'utf8mb4');

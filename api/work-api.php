@@ -25,13 +25,15 @@ try {
 
     $works = $stmt->fetchAll();
 
+    $total = $pdo->query("SELECT COUNT(*) FROM works")->fetchColumn();
+
     echo json_encode([
         'success' => true,
         'data' => $works,
         'pagination' => [
             'offset' => $offset,
             'limit' => $limit,
-            'total' => count($works)
+            'total' => (int)$total
         ]
     ]);
 

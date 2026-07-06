@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const workViewAdminBtn = document.getElementById('workViewAdmin');
 
     workViewAdminBtn.addEventListener("click", () => {
-        console.log("🧱 Work admin view loaded");
-
         container.innerHTML = `
             <form id="addWorkForm" class="mb-4 p-3 border rounded">
                 <h4>Add New Work</h4>
@@ -40,57 +38,38 @@ document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("addWorkForm");
         const worksTableContainer = document.getElementById("worksTableContainer");
 
-        if (!form) {
-            console.error("⚠️ Form not found in DOM");
-            return;
-        }
-
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
-            console.log("✅ Form submitted");
-
             const dataObj = Object.fromEntries(new FormData(form));
-            console.log("Data to send:", dataObj);
-
             try {
                 const res = await fetch("./api/crudWork.php", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(dataObj)
                 });
-
                 const result = await res.json();
-                console.log("Server response:", result);
-
                 if (result.success) {
-                    alert("✅ Work added successfully");
+                    alert("Work added successfully");
                     form.reset();
                     await loadWorks();
                 } else {
-                    alert("❌ Error adding work");
+                    alert("Error: " + (result.error || "Unknown"));
                 }
             } catch (err) {
-                console.error("❌ Fetch error:", err);
-                alert("Fetch error – check console");
+                alert("Fetch error");
             }
         });
 
-        // Charger les works
         async function loadWorks() {
             try {
                 const result = await fetch("./api/crudWork.php");
-                if (!result.ok) throw new Error("HTTP error " + result.status);
-
                 const data = await result.json();
-                console.log("📦 Loaded works:", data);
-
                 if (!Array.isArray(data) || data.length === 0) {
                     worksTableContainer.innerHTML = "<p>No works found.</p>";
                     return;
                 }
-
                 let html = `
-                    <table class="table table-striped table-bordered text-center">
+                    <table class="table table-striped table-bordered text-center align-middle">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
@@ -102,37 +81,75 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <th>Duration</th>
                                 <th>Date Beg</th>
                                 <th>Date Fin</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                 `;
-
                 data.forEach(item => {
                     html += `
                         <tr>
                             <td>${item.id}</td>
                             <td>${item.title}</td>
-                            <td>${item.bio}</td>
-                            <td>${item.image}</td>
-                            <td>${item.location}</td>
-                            <td>${item["total-area"]}</td>
-                            <td>${item.duration}</td>
-                            <td>${item["date-beg"]}</td>
-                            <td>${item["date-fin"]}</td>
+                            <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.bio ?? "-"}</td>
+                            <td>${item.image ?? "-"}</td>
+                            <td>${item.location ?? "-"}</td>
+                            <td>${item["total-area"] ?? "-"}</td>
+                            <td>${item.duration ?? "-"}</td>
+                            <td>${item["date-beg"] ?? "-"}</td>
+                            <td>${item["date-fin"] ?? "-"}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning me-1 editBtn" data-id="${item.id}">Edit</button>
+                                <button class="btn btn-sm btn-danger deleteBtn" data-id="${item.id}">Delete</button>
+                            </td>
                         </tr>
                     `;
                 });
-
                 html += "</tbody></table>";
                 worksTableContainer.innerHTML = html;
 
+                document.querySelectorAll(".deleteBtn").forEach((btn) => {
+                    btn.addEventListener("click", async () => {
+                        if (!confirm("Delete this work?")) return;
+                        const id = btn.dataset.id;
+                        const res = await fetch(`./api/crudWork.php?id=${id}`, { method: "DELETE" });
+                        const result = await res.json();
+                        if (result.success) loadWorks();
+                        else alert("Delete failed");
+                    });
+                });
+
+                document.querySelectorAll(".editBtn").forEach((btn) => {
+                    btn.addEventListener("click", async () => {
+                        const id = btn.dataset.id;
+                        const res = await fetch(`./api/crudWork.php?id=${id}`);
+                        const items = await res.json();
+                        const item = Array.isArray(items) ? items[0] : items;
+                        if (!item) return;
+                        const title = prompt("Title:", item.title);
+                        if (!title) return;
+                        const bio = prompt("Bio:", item.bio || "");
+                        const image = prompt("Image URL:", item.image || "");
+                        const location = prompt("Location:", item.location || "");
+                        const total_area = prompt("Total Area:", item["total-area"] || "");
+                        const duration = prompt("Duration:", item.duration || "");
+                        const date_beg = prompt("Date Beg (YYYY-MM-DD):", item["date-beg"] || "");
+                        const date_fin = prompt("Date Fin (YYYY-MM-DD):", item["date-fin"] || "");
+                        const upRes = await fetch(`./api/crudWork.php?id=${id}`, {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ title, bio, image, location, total_area, duration, date_beg, date_fin }),
+                        });
+                        const upResult = await upRes.json();
+                        if (upResult.success) loadWorks();
+                        else alert("Update failed");
+                    });
+                });
             } catch (err) {
-                console.error("Error loading works:", err);
                 worksTableContainer.innerHTML = `<p style="color:red;">Error loading works.</p>`;
             }
         }
 
-        // Charger la table directement
         loadWorks();
     });
 });

@@ -5,16 +5,16 @@ require_once '../../api/helpers.php';
 setHeaders();
 
 $pdo = getPDO();
-$methode = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'];
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
-switch($methode) {
+switch ($method) {
     case 'GET':
         if ($id) {
-            $stmt = $pdo->prepare("SELECT * FROM works WHERE id=?");
+            $stmt = $pdo->prepare("SELECT * FROM services WHERE id=?");
             $stmt->execute([$id]);
         } else {
-            $stmt = $pdo->prepare("SELECT * FROM works");
+            $stmt = $pdo->prepare("SELECT * FROM services");
             $stmt->execute();
         }
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -32,19 +32,18 @@ switch($methode) {
 
         try {
             $stmt = $pdo->prepare("
-                INSERT INTO works (title, bio, image, location, `total-area`, duration, `date-beg`, `date-fin`) 
-                VALUES (:title, :bio, :image, :location, :total_area, :duration, :date_beg, :date_fin)
+                INSERT INTO services (name, slug, description, icon)
+                VALUES (:name, :slug, :description, :icon)
             ");
 
+            $name = $input['title'] ?? 'Untitled';
+            $slug = strtolower(trim(preg_replace('/[^a-zA-Z0-9-]+/', '-', $name), '-'));
+
             $stmt->execute([
-                ":title" => $input['title'] ?? null,
-                ":bio" => $input['bio'] ?? null,
-                ":image" => $input['image'] ?? null,
-                ":location" => $input['location'] ?? null,
-                ":total_area" => $input['total_area'] ?? null,
-                ":duration" => $input['duration'] ?? null,
-                ":date_beg" => $input['date_beg'] ?? null,
-                ":date_fin" => $input['date_fin'] ?? null
+                ":name" => $name,
+                ":slug" => $slug,
+                ":description" => $input['description'] ?? null,
+                ":icon" => $input['image'] ?? null,
             ]);
 
             echo json_encode([
@@ -68,20 +67,17 @@ switch($methode) {
             exit;
         }
         try {
+            $name = $input['title'] ?? 'Untitled';
+            $slug = strtolower(trim(preg_replace('/[^a-zA-Z0-9-]+/', '-', $name), '-'));
             $stmt = $pdo->prepare("
-                UPDATE works SET title=:title, bio=:bio, image=:image, location=:location,
-                    `total-area`=:total_area, duration=:duration, `date-beg`=:date_beg, `date-fin`=:date_fin
+                UPDATE services SET name=:name, slug=:slug, description=:description, icon=:icon
                 WHERE id=:id
             ");
             $stmt->execute([
-                ":title" => $input['title'] ?? null,
-                ":bio" => $input['bio'] ?? null,
-                ":image" => $input['image'] ?? null,
-                ":location" => $input['location'] ?? null,
-                ":total_area" => $input['total_area'] ?? null,
-                ":duration" => $input['duration'] ?? null,
-                ":date_beg" => $input['date_beg'] ?? null,
-                ":date_fin" => $input['date_fin'] ?? null,
+                ":name" => $name,
+                ":slug" => $slug,
+                ":description" => $input['description'] ?? null,
+                ":icon" => $input['image'] ?? null,
                 ":id" => $id,
             ]);
             echo json_encode(["success" => true]);
@@ -96,13 +92,13 @@ switch($methode) {
             echo json_encode(["error" => "ID required"]);
             exit;
         }
-        $stmt = $pdo->prepare("DELETE FROM works WHERE id=?");
+        $stmt = $pdo->prepare("DELETE FROM services WHERE id=?");
         $stmt->execute([$id]);
         echo json_encode(["success" => true]);
         break;
 
     default:
         http_response_code(405);
-        echo json_encode(["error"=>"Method Not Allowed"]);
+        echo json_encode(["error" => "Method Not Allowed"]);
         break;
 }
