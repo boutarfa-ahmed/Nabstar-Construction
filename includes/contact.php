@@ -46,14 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com'; // ou smtp.yourdomain.com
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'boutarfa.ahmed.boutarfa.ahmed@gmail.com'; // 🔒 ton adresse email
-            $mail->Password   = 'gujo yulh fsdx lzzh'; // 🔒 mot de passe ou App Password Gmail
+    $mail->Username   = 'demo@example.com';
+    $mail->Password   = 'your-smtp-password';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
             // Expéditeur et destinataire
             $mail->setFrom($email, $fullName);
-            $mail->addAddress('ahmed.boutarfa.2003@gmail.com', 'Nabstar Construction');
+            $mail->addAddress('demo@example.com', 'Nabstar Construction');
 
             // Contenu
             $mail->isHTML(true);
@@ -152,8 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="contact__details">
                     <h3>Contact</h3>
-                    <p><a class="contact-link" href="tel:+447449747101">Phone : 07449 747101</a></p>
-                    <p><a class="contact-link" href="mailto:info@nabstarconstruction.co.uk">Email : info@nabstarconstruction.co.uk</a></p>
+                    <p><a class="contact-link" href="tel:+1 (555) 123-4567">Phone : +1 (555) 123-4567</a></p>
+                    <p><a class="contact-link" href="mailto:demo@example.com">Email : demo@example.com</a></p>
                 </div>
             </address>
 
@@ -166,8 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h3>Stay Connected</h3>
                 <div class="connect__area">
                     <a class="icon__bg__accent" href="https://www.facebook.com/nabstarconstruction/photos?locale=en_GB&checkpoint_src=any" aria-label="Facebook Profile" target="_blank" rel="noopener noreferrer"> <i class="fab fa-facebook-f"></i> </a>
-                    <a class="icon__bg__accent" href="https://api.whatsapp.com/send/?phone=447449747101&text=Hello+Nabstar+Construction%2C+I+would+like+to+get+a+quote+please.&type=phone_number&app_absent=0" aria-label="WhatsApp Profile" target="_blank" rel="noopener noreferrer"> <i class="fab fa-whatsapp"></i> </a> 
-                    <a class="icon__bg__accent" href="mailto:info@nabstarconstruction.co.uk" aria-label="Send an email"> <i class="fas fa-envelope"></i> </a> 
+                    <a class="icon__bg__accent" href="https://api.whatsapp.com/send/?phone=15551234567&text=Hello+Nabstar+Construction%2C+I+would+like+to+get+a+quote+please.&type=phone_number&app_absent=0" aria-label="WhatsApp Profile" target="_blank" rel="noopener noreferrer"> <i class="fab fa-whatsapp"></i> </a> 
+                    <a class="icon__bg__accent" href="mailto:demo@example.com" aria-label="Send an email"> <i class="fas fa-envelope"></i> </a> 
                     <a class="icon__bg__accent" href="https://maps.google.com/?q=Watford,+United+Kingdom" aria-label="Find us on a map" target="_blank" rel="noopener noreferrer"> <i class="fas fa-map-marker-alt"></i> </a> 
                 </div>
             </div>

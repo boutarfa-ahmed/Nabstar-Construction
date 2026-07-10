@@ -28,13 +28,13 @@
         <div class="header-contact-nav-wrapper" id="main-navigation">
             <div class="header-contact-info">
                 <div class="contact-links-group">
-                    <a class="contact-link" href="tel:+447449747101" aria-label="Call Nabstar Construction at 07449 747101">
+                    <a class="contact-link" href="tel:+1 (555) 123-4567" aria-label="Call Nabstar Construction">
                         <i class="fas fa-phone-alt"></i>
-                        <span>07449 747101</span>
+                        <span>+1 (555) 123-4567</span>
                     </a>
-                    <a class="contact-link" href="mailto:info@nabstarconstruction.co.uk" aria-label="Email Nabstar Construction">
+                    <a class="contact-link" href="mailto:demo@example.com" aria-label="Email Nabstar Construction">
                         <i class="fas fa-envelope"></i>
-                        <span>info@nabstarconstruction.co.uk</span>
+                        <span>demo@example.com</span>
                     </a>
                 </div>
 
@@ -45,7 +45,7 @@
                     <a href="#" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a href="mailto:info@nabstarconstruction.co.uk" aria-label="Email" target="_blank" rel="noopener noreferrer">
+                    <a href="mailto:demo@example.com" aria-label="Email" target="_blank" rel="noopener noreferrer">
                         <i class="fas fa-envelope"></i>
                     </a>
                     <a href="#" aria-label="Google Maps" target="_blank" rel="noopener noreferrer">

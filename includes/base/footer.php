@@ -24,10 +24,10 @@
                     <a href="https://www.facebook.com/nabstarconstruction/photos?locale=en_GB&checkpoint_src=any" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://api.whatsapp.com/send/?phone=447449747101&text=Hello+Nabstar+Construction%2C+I+would+like+to+get+a+quote+please.&type=phone_number&app_absent=0" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+                    <a href="https://api.whatsapp.com/send/?phone=15551234567&text=Hello+Nabstar+Construction%2C+I+would+like+to+get+a+quote+please.&type=phone_number&app_absent=0" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a href="mailto:info@nabstarconstruction.co.uk" aria-label="Email">
+                    <a href="mailto:demo@example.com" aria-label="Email">
                         <i class="fas fa-envelope"></i>
                     </a>
                     <a href="https://www.google.com/maps/place/Watford,+Royaume-Uni" aria-label="Location" target="_blank" rel="noopener noreferrer">
@@ -54,8 +54,8 @@
                 <!-- Contact Info -->
                 <div class="footer-contact">
                     <h3>Contact</h3>
-                    <a class="contact-link" href="tel:+447449747101"><i class="fas fa-phone-alt"></i><span>07449 747101</span></a>
-                    <a class="contact-link" href="mailto:info@nabstarconstruction.co.uk"><i class="fas fa-envelope"></i><span>info@nabstarconstruction.co.uk</span></a>
+                    <a class="contact-link" href="tel:+1 (555) 123-4567"><i class="fas fa-phone-alt"></i><span>+1 (555) 123-4567</span></a>
+                    <a class="contact-link" href="mailto:demo@example.com"><i class="fas fa-envelope"></i><span>demo@example.com</span></a>
                     <a class="contact-link" href="https://www.google.com/maps/place/Watford,+Royaume-Uni" target="_blank" rel="noopener noreferrer">
                     <i class="fas fa-map-marker-alt"></i><span>Watford, Royaume-Uni</span>
                     </a>
@@ -165,7 +165,7 @@
 
                     <p>We are <strong>Nabstar Construction</strong> (“we”, “us”, “our”). We are the controller responsible for your personal data.</p>
 
-                    <p>Contact us regarding data protection at: <a href="mailto:info@nabstarconstruction.co.uk">info@nabstarconstruction.co.uk</a>.</p>
+                    <p>Contact us regarding data protection at: <a href="mailto:demo@example.com">demo@example.com</a>.</p>
 
                     <h2>What we collect</h2>
                     <p>When you use our website, we may collect:</p>

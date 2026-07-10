@@ -27,9 +27,9 @@
         <div class="faqs__phone__details">
           <p>Your Contact, Our Priority</p>
           <h4>24/7 Service</h4>
-          <a class="contact-link" href="tel:+447449747101" aria-label="Call Nabstar Construction at 07449 747101">
-            <span>07449 747101</span>
-          </a>
+  <a class="contact-link" href="tel:+1 (555) 123-4567" aria-label="Call Nabstar Construction at +1 (555) 123-4567">
+    <span>+1 (555) 123-4567</span>
+  </a>
         </div>
       </div>
     </div>
